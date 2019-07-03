@@ -5,9 +5,6 @@ require("acciones/conexion.php");
 // Mantengo la sesion abierta
 session_start();
 
-// Obtengo todas las comunidades y guardo el resultado en la variable $comunidades
-$query = "SELECT * FROM categorias";
-$categorias = mysqli_query($conexion, $query);
 
 ?>
 <!DOCTYPE html>
@@ -53,11 +50,23 @@ $categorias = mysqli_query($conexion, $query);
 
 <div class="container">
     <div class="row">
-      <div class="col-6">
-        Productos
-      </div>
-      <div class="col-6">
-        Mercados
+      <div class="col-12">
+        <form action="acciones/subirproducto.php">
+                        <div class="form-group">
+                            <label for="tituloprod">Título</label>
+                            <input type="text" class="form-control" name="titulo-prod" id="titulo-prod">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionprod">Descripción</label>
+                            <input type="text" class="form-control" name="descripcion-prod" id="descripcion-prod">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionprod">Fecha</label>
+                            <input type="text" class="form-control" name="fechaprod" id="fechaprod">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3" id="boton-subirprod">Enviar</button>
+        </form>
       </div>
     </div>
   </div>

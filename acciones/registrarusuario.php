@@ -37,8 +37,8 @@
          */
         $_SESSION["username"] = $username;
         $_SESSION["user-id"] = mysqli_insert_id($conexion);
-        unset($_SESSION["comunidad-id"]);
-        unset($_SESSION["comunidad-nombre"]);
+        unset($_SESSION["categoria-id"]);
+        unset($_SESSION["categoria-nombre"]);
         header('Location: /comparando/home.php');
     } else {
         /**
