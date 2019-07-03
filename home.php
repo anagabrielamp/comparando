@@ -28,7 +28,7 @@ session_start();
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light" id="topnav">
   <a class="navbar-brand" href="#">
     <?php if (isset($_SESSION["username"])) { ?> 
                 Hola
@@ -41,9 +41,9 @@ session_start();
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
   
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <form class="form-inline my-2 my-lg-0" id="search">
+      <input class="form-control mr-sm-2" type="text" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
     </form>
   </div>
   
