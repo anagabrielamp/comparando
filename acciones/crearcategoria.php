@@ -10,7 +10,7 @@
      *  viene guardada en la variable global $_REQUEST, y las asigno
      *  a la variable $comunidad
      */
-    $comunidad = $_REQUEST["nombre-categoria"];
+    $categoria = $_REQUEST["nombre-categoria"];
 
     /**  
      * Creo una query para insertar en la tabla comunidades un nuevo

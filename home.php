@@ -9,6 +9,25 @@ session_start();
 $query = "SELECT * FROM categorias";
 $categorias = mysqli_query($conexion, $query);
 
+if (isset($_SESSION['categoria-nombre'])) {
+  // Si hay algun dato guardado en la sesion de la variable comunidad-nombre
+  // lo guardo en la variable $nombreComunidad
+  $nombreCategoria = $_SESSION['categoria-nombre'];
+  
+  // Busco todas las publicaciones que sean del id de la comunidad seleccionada
+  // y guardo el resultado en la variable $publicaciones
+  $query = "SELECT * FROM productos WHERE categoriaid = " . $_SESSION["categoria-id"];
+  $productos = mysqli_query($conexion, $query);
+} else {
+  // Si no hay ningun dato guardado en la variable comunidad-nombre,
+  // entonces a $nombreComunidad le asigno "General"
+  $nombreComunidad = 'General';
+
+  // Obtengo TODAS las publicaciones (porque no hay ninguna comunidad seleccionada)
+  // y la guardo en publicaciones
+  $query = "SELECT * FROM productos";
+  $productos = mysqli_query($conexion, $query);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,17 +69,59 @@ $categorias = mysqli_query($conexion, $query);
     </form>
   </div>
 </nav>
+<div class="container mt-3">    
+        <h1 class="display-3 text-center mb-3 d-md-none">Comparando</h1>
+        <div class="row">
+          <div class="col-sm-12 col-md-3">
+                <?php if (isset($_SESSION["categoria-nombre"])) { ?>
+                <div class="card p-2 mb-5">
+                    <form action="acciones/crearproducto.php" method="post">
+                        <div class="form-group">
+                            <label for="prod-title">Nombre</label>
+                            <input type="text" required class="form-control" name="titulo-prod" id="titulo-prod">
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-descripcion">Descripción</label>
+                            <input type="text" required class="form-control" name="descripcion-prod" id="descripcion-prod">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="post-button">Crear producto</button>
+                    </form>
+            </div>
+                <?php } ?>
+<div class="card p-2 mb-5">
+                    <form action="acciones/crearcategoria.php" method="post">
+                        <div class="form-group">
+                            <label for="nombre-categoria">Nombre</label>
+                            <input type="text" required class="form-control" name="nombre-categoria" id="nombre-categoria">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="">Crear categoria</button>
+                    </form>
+</div>
 
-<div class="container">
-    <div class="row">
-      <div class="col-6">
-        Productos
-      </div>
-      <div class="col-6">
-        Mercados
-      </div>
-    </div>
-  </div>
+<div class="col-sm-12 col-md-3" id="categorias">
+                <h2 class="mb-3">Categorias</h2>
+                <a href="acciones/seleccionarcategoria.php?id=general" class="card-link">General</a><br/>
+                <?php
+                    while($categoria = mysqli_fetch_array($categorias)) {
+                        ?>
+                            <a href="acciones/seleccionarcategoria.php?id=<?php echo $categoria["CategoriaId"]; ?>&nombre=<?php echo $categoria["Nombre"]; ?>" class="card-link"><?php echo $categoria["Nombre"]; ?></a><br/>
+                        <?php
+                    }
+                ?>
+<div class="col-sm-12 col-md-3" id="productos">
+                <h2 class="mb-3">Productos</h2>
+                <?php
+                    while($producto = mysqli_fetch_array($productos)) {
+                        ?>
+                            <a href="acciones/seleccionarproducto.php?id=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
+                        <?php
+                    }
+                ?>
+</div>
+</div>
+
+
+
   
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
