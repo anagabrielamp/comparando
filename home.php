@@ -29,6 +29,16 @@ if (isset($_SESSION['categoria-nombre'])) {
   $productos = mysqli_query($conexion, $query);
 }
 ?>
+
+<?php 
+
+// Obtengo todas las comunidades y guardo el resultado en la variable $comunidades
+$query = "SELECT * FROM supermercados";
+$supermercados = mysqli_query($conexion, $query);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,6 +79,8 @@ if (isset($_SESSION['categoria-nombre'])) {
     </form>
   </div>
 </nav>
+<form action="acciones/crearprecio.php" method="post">
+
 <div class="container mt-3">    
         <h1 class="display-3 text-center mb-3 d-md-none">Comparando</h1>
         <div class="row">
@@ -88,7 +100,9 @@ if (isset($_SESSION['categoria-nombre'])) {
                     </form>
             </div>
                 <?php } ?>
-<div class="card p-2 mb-5">
+        <div class="row">
+            <div  class="col-12">
+                <div class="card p-2 mb-5">
                     <form action="acciones/crearcategoria.php" method="post">
                         <div class="form-group">
                             <label for="nombre-categoria">Nombre</label>
@@ -96,9 +110,11 @@ if (isset($_SESSION['categoria-nombre'])) {
                         </div>
                         <button type="submit" class="btn btn-primary w-100" id="">Crear categoria</button>
                     </form>
-</div>
-
-<div class="col-sm-12 col-md-3" id="categorias">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-3" id="categorias">
                 <h2 class="mb-3">Categorias</h2>
                 <a href="acciones/seleccionarcategoria.php?id=general" class="card-link">General</a><br/>
                 <?php
@@ -108,15 +124,58 @@ if (isset($_SESSION['categoria-nombre'])) {
                         <?php
                     }
                 ?>
-<div class="col-sm-12 col-md-3" id="productos">
+            </div>
+        <div class="row">
+        <div class="col-12" id="productos">
                 <h2 class="mb-3">Productos</h2>
                 <?php
                     while($producto = mysqli_fetch_array($productos)) {
                         ?>
-                            <a href="acciones/seleccionarproducto.php?id=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
+                        <input type="radio" name="productoId" value="<?php echo $producto["ProductoId"]; ?>"><?php echo $producto["Titulo"]; ?>
+                        
                         <?php
                     }
                 ?>
+        </div>
+        <div class="row">              
+            <div class="card p-2 mb-5">
+                    <form action="acciones/crearsupermercado.php" method="post">
+                        <div class="form-group">
+                            <label for="nombre-supermercado">Nombre supermercado</label>
+                            <input type="text" required class="form-control" name="nombre-supermercado" id="nombre-supermercado">
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion-supermercado">Dirección supermercado</label>
+                            <input type="text" required class="form-control" name="direccion-supermercado" id="direccion-supermercado">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="">Crear supermercado</button>
+                    </form>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12" id="supermercados">
+                <h2 class="mb-3">Supermercados</h2>
+                <?php
+                    while($supermercado = mysqli_fetch_array($supermercados)) {
+                        ?>
+                            <a href="acciones/seleccionarsupermercado.php?id=<?php echo $supermercado["SupermercadoId"]; ?>&Nombre=<?php echo $supermercado["Nombre"]; ?>" class="card-link"><?php echo $supermercado["Nombre"]; ?></a><br/>
+                        <?php
+                    }
+                ?>
+        </div>
+
+<div class="card p-2 mb-5">
+                        <div class="form-group">
+                            <label for="precio">Precio</label>
+                            <input type="text" required class="form-control" name="precio" id="precio">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="">Asignar precio</button>
+                    </form>
+</div>
+
+</div>
 </div>
 </div>
 
