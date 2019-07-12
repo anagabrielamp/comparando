@@ -38,6 +38,13 @@ $supermercados = mysqli_query($conexion, $query);
 
 ?>
 
+<?php 
+
+// Obtengo todas las comunidades y guardo el resultado en la variable $comunidades
+$query = "SELECT * FROM precios";
+$precios = mysqli_query($conexion, $query);
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,18 +132,6 @@ $supermercados = mysqli_query($conexion, $query);
                     }
                 ?>
             </div>
-        <div class="row">
-        <div class="col-12" id="productos">
-                <h2 class="mb-3">Productos</h2>
-                <?php
-                    while($producto = mysqli_fetch_array($productos)) {
-                        ?>
-                        <input type="radio" name="productoId" value="<?php echo $producto["ProductoId"]; ?>"><?php echo $producto["Titulo"]; ?>
-                        
-                        <?php
-                    }
-                ?>
-        </div>
         <div class="row">              
             <div class="card p-2 mb-5">
                     <form action="acciones/crearsupermercado.php" method="post">
@@ -153,27 +148,60 @@ $supermercados = mysqli_query($conexion, $query);
             </div>
         </div>
 
-        <div class="row">
 
-            <div class="col-12" id="supermercados">
-                <h2 class="mb-3">Supermercados</h2>
-                <?php
-                    while($supermercado = mysqli_fetch_array($supermercados)) {
+        <div class="row">              
+            <div class="card p-2 mb-5">
+                    <form action="acciones/crearprecio.php" method="post">
+                        <div class="form-group">
+                            <label for="precio">Precio de producto</label>
+                            <input type="text" required class="form-control" name="precio" id="precio">
+                        </div>
+                        <div class="form-group">
+                            <label for="producto">Producto</label>
+                        <?php
+                    while($producto = mysqli_fetch_array($productos)) {
                         ?>
-                            <a href="acciones/seleccionarsupermercado.php?id=<?php echo $supermercado["SupermercadoId"]; ?>&Nombre=<?php echo $supermercado["Nombre"]; ?>" class="card-link"><?php echo $supermercado["Nombre"]; ?></a><br/>
+                        <input type="radio" name="productoId" value="<?php echo $producto["ProductoId"]; ?>"><?php echo $producto["Titulo"]; ?>
+                        
                         <?php
                     }
                 ?>
-        </div>
-
-<div class="card p-2 mb-5">
+                </div>
                         <div class="form-group">
-                            <label for="precio">Precio</label>
-                            <input type="text" required class="form-control" name="precio" id="precio">
+                            <label for="supermercado">Supermercado</label>
+                            <?php
+                    while($supermercado = mysqli_fetch_array($supermercados)) {
+                        ?>
+                        <input type="radio" name="supermercadoId" value="<?php echo $supermercado["SupermercadoId"]; ?>"><?php echo $supermercado["Nombre"]; ?>
+                        
+                        <?php
+                    }
+                ?>
                         </div>
+                        
                         <button type="submit" class="btn btn-primary w-100" id="">Asignar precio</button>
                     </form>
-</div>
+                </div>
+                <div class="row">
+                <div class="col-sm-12 col-md-3" id="productos">
+                <h2 class="mb-3">Productos</h2>
+                <?php
+                    mysqli_data_seek( $productos, 0 );
+                    while($producto = mysqli_fetch_array($productos)) {
+                        ?>
+                            <a href="acciones/seleccionarproducto.php?id=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
+                        <?php
+                    }
+                ?>
+                </div>
+                </div>
+        
+
+        </div>
+        </div>
+        </div>
+
+
 
 </div>
 </div>

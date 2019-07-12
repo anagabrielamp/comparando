@@ -12,6 +12,8 @@
      */
     $precio = $_REQUEST["precio"];
     $productoId = $_REQUEST["productoId"];
+    $supermercadoId = $_REQUEST["supermercadoId"];
+    
     /**  
      * Creo una query para insertar en la tabla publicaciones un nuevo
      * registro con los valores de las variables $titulo y $texto
@@ -20,7 +22,7 @@
      * Tambien utilizamos los valores guardados en la session de user-id y comunidad-id
      */ 
     $query = "INSERT INTO precios(precio, fecha, productoid, supermercadoid, usuarioid) 
-    VALUES('" . $precio . "', now(), '" . $productoId . "', '" . $_SESSION["supermercado-id"] . "', '" . $_SESSION["usuario-id"] . "')"; 
+    VALUES('" . $precio . "', now(), '" . $productoId . "', '" . $supermercadoId . "', '" . $_SESSION["user-id"] . "')"; 
     
     // Ejecuto la query
     mysqli_query($conexion, $query);
