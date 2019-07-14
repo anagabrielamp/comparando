@@ -86,7 +86,6 @@ $precios = mysqli_query($conexion, $query);
     </form>
   </div>
 </nav>
-<form action="acciones/crearprecio.php" method="post">
 
 <div class="container mt-3">    
         <h1 class="display-3 text-center mb-3 d-md-none">Comparando</h1>
@@ -189,10 +188,14 @@ $precios = mysqli_query($conexion, $query);
                     mysqli_data_seek( $productos, 0 );
                     while($producto = mysqli_fetch_array($productos)) {
                         ?>
-                            <a href="acciones/seleccionarproducto.php?id=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
+                            <a href="producto.php?productoId=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
                         <?php
                     }
                 ?>
+
+            
+
+
                 </div>
                 </div>
         
