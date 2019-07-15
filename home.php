@@ -77,20 +77,12 @@ $precios = mysqli_query($conexion, $query);
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  
-    <form class="form-inline my-2 my-lg-0" id="search">
-      <input class="form-control mr-sm-2" type="text" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-    </form>
-  </div>
 </nav>
 
-<div class="container mt-3">    
-        <h1 class="display-3 text-center mb-3 d-md-none">Comparando</h1>
+<div class="container mt-4">    
+        <h1 class="display-4 text-center mb-3">Comparando</h1>
         <div class="row">
-          <div class="col-sm-12 col-md-3">
+          <div class="col-3 offset-2">
                 <?php if (isset($_SESSION["categoria-nombre"])) { ?>
                 <div class="card p-2 mb-5">
                     <form action="acciones/crearproducto.php" method="post">
@@ -104,10 +96,10 @@ $precios = mysqli_query($conexion, $query);
                         </div>
                         <button type="submit" class="btn btn-primary w-100" id="post-button">Crear producto</button>
                     </form>
-            </div>
+                </div>
                 <?php } ?>
-        <div class="row">
-            <div  class="col-12">
+            </div>
+            <div  class="col-3">
                 <div class="card p-2 mb-5">
                     <form action="acciones/crearcategoria.php" method="post">
                         <div class="form-group">
@@ -118,21 +110,8 @@ $precios = mysqli_query($conexion, $query);
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-3" id="categorias">
-                <h2 class="mb-3">Categorias</h2>
-                <a href="acciones/seleccionarcategoria.php?id=general" class="card-link">General</a><br/>
-                <?php
-                    while($categoria = mysqli_fetch_array($categorias)) {
-                        ?>
-                            <a href="acciones/seleccionarcategoria.php?id=<?php echo $categoria["CategoriaId"]; ?>&nombre=<?php echo $categoria["Nombre"]; ?>" class="card-link"><?php echo $categoria["Nombre"]; ?></a><br/>
-                        <?php
-                    }
-                ?>
-            </div>
-        <div class="row">              
-            <div class="card p-2 mb-5">
+            <div class="col-3">              
+                <div class="card p-2 mb-5">
                     <form action="acciones/crearsupermercado.php" method="post">
                         <div class="form-group">
                             <label for="nombre-supermercado">Nombre supermercado</label>
@@ -144,11 +123,34 @@ $precios = mysqli_query($conexion, $query);
                         </div>
                         <button type="submit" class="btn btn-primary w-100" id="">Crear supermercado</button>
                     </form>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-3" id="categorias">
+                <h2 class="mb-3">Categorias</h2>
+                <a href="acciones/seleccionarcategoria.php?id=general" class="card-link">General</a><br/>
+                <?php
+                    while($categoria = mysqli_fetch_array($categorias)) {
+                        ?>
+                            <a href="acciones/seleccionarcategoria.php?id=<?php echo $categoria["CategoriaId"]; ?>&nombre=<?php echo $categoria["Nombre"]; ?>" class="card-link"><?php echo $categoria["Nombre"]; ?></a><br/>
+                        <?php
+                    }
+                ?>
+            </div>
+            <div class="col-3" id="productos">
+                <h2 class="mb-3">Productos</h2>
+                <?php
+                    while($producto = mysqli_fetch_array($productos)) {
+                        ?>
+                            <a href="producto.php?productoId=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
+                        <?php
+                    }
+                ?>
+            </div>
 
 
-        <div class="row">              
+            <div class="col-6">              
             <div class="card p-2 mb-5">
                     <form action="acciones/crearprecio.php" method="post">
                         <div class="form-group">
@@ -158,6 +160,7 @@ $precios = mysqli_query($conexion, $query);
                         <div class="form-group">
                             <label for="producto">Producto</label>
                         <?php
+                    mysqli_data_seek( $productos, 0);
                     while($producto = mysqli_fetch_array($productos)) {
                         ?>
                         <input type="radio" name="productoId" value="<?php echo $producto["ProductoId"]; ?>"><?php echo $producto["Titulo"]; ?>
@@ -169,6 +172,7 @@ $precios = mysqli_query($conexion, $query);
                         <div class="form-group">
                             <label for="supermercado">Supermercado</label>
                             <?php
+                    
                     while($supermercado = mysqli_fetch_array($supermercados)) {
                         ?>
                         <input type="radio" name="supermercadoId" value="<?php echo $supermercado["SupermercadoId"]; ?>"><?php echo $supermercado["Nombre"]; ?>
@@ -176,26 +180,10 @@ $precios = mysqli_query($conexion, $query);
                         <?php
                     }
                 ?>
-                        </div>
+                </div>
                         
                         <button type="submit" class="btn btn-primary w-100" id="">Asignar precio</button>
                     </form>
-                </div>
-                <div class="row">
-                <div class="col-sm-12 col-md-3" id="productos">
-                <h2 class="mb-3">Productos</h2>
-                <?php
-                    mysqli_data_seek( $productos, 0 );
-                    while($producto = mysqli_fetch_array($productos)) {
-                        ?>
-                            <a href="producto.php?productoId=<?php echo $producto["ProductoId"]; ?>&titulo=<?php echo $producto["Titulo"]; ?>" class="card-link"><?php echo $producto["Titulo"]; ?></a><br/>
-                        <?php
-                    }
-                ?>
-
-            
-
-
                 </div>
                 </div>
         
