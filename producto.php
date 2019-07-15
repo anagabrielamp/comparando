@@ -5,6 +5,7 @@ require("acciones/conexion.php");
 // Mantengo la sesion abierta
 session_start();
 
+
 ?>
 
 <!DOCTYPE html>
@@ -28,36 +29,65 @@ session_start();
 
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-light" id="topnav">
+  <a class="navbar-brand" href="#">
+    <?php if (isset($_SESSION["username"])) { ?> 
+                Hola
+            <?php echo $_SESSION["username"] ?>
+    <?php } ?>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
 
-<?php
+<div class="container mt-4">    
+        <h1 class="display-4 text-center mb-3">Comparando</h1>
+        <div class="row">
+          <div class="col-4 offset-4">
+          <?php
 
-$productoId = $_REQUEST['productoId']; // esto tenes que obtenerlo de algun lado
+            $productoId = $_REQUEST['productoId']; // esto tenes que obtenerlo de algun lado
 
-$query = 'SELECT Supermercados.*, Precios.PrecioId, Precios.Precio, Precios.Fecha, Precios.UsuarioId
+            $query = 'SELECT Supermercados.*, Precios.PrecioId, Precios.Precio, Precios.Fecha, Precios.UsuarioId
 
-FROM Supermercados
+            FROM Supermercados
 
-INNER JOIN Precios
+            INNER JOIN Precios
 
-ON Supermercados.SupermercadoId = Precios.SupermercadoId
+            ON Supermercados.SupermercadoId = Precios.SupermercadoId
 
-WHERE Precios.ProductoId = ' . $productoId . '
+            WHERE Precios.ProductoId = ' . $productoId . '
 
-GROUP BY(Precios.PrecioId)';
+            GROUP BY(Precios.PrecioId)';
 
-$precios = mysqli_query($conexion, $query);
+            $precios = mysqli_query($conexion, $query);
 
-while($fila = mysqli_fetch_array($precios)) {
+            while($fila = mysqli_fetch_array($precios)) {
     
-    // Lo que pongas aca adentro se va a ejecutar por cada precio del producto
-    
-    echo $fila["Nombre"]; // Nombre supermercado
-    
-  
-    echo $fila["Precio"]; // Preci
-}
+            // Lo que pongas aca adentro se va a ejecutar por cada precio del producto
+        ?>
+        <ul class="list-group text-center">
+            <li class="list-group-item">Supermercado:
+                 <?php  echo $fila["Nombre"]; // Nombre supermercado
+                ?>
+                - Precio:
+                <?php    
+                echo $fila["Precio"]; // Preci
+                ?>
+            </li>
+        </ul>
+        <?php
+        }
 
-?>
+        ?>
+
+
+
+ 
+        </div>
+</div>
+
 
 
 
