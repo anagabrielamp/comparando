@@ -1,15 +1,37 @@
 body {
-    background-color: #fcf7f8;
+    background-color: #f7f7f7;
 }
 
-#form-registro {
-    border: solid white;
-}
+/* Top nav */
 
 #topnav {
     background-color: white;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #343030;
 }
 
-#search {
-    text-align: center;
+#topnav2 {
+    border-right: 1px solid #e1e1e1;
+    background-color: #f7f7f7;
+
 }
+
+#buttoncat, .btn-light {
+    background-color: white;
+    height: 150px;
+    border-radius: 75px;
+    width: 100px;
+    color: black;
+    border: none;
+    margin: 2px;
+}
+
+#buttoncat:hover, .btn-light:hover {
+    background-color: #fbc560;
+    border: none;
+}
+
+a {
+    color: black;
+}
+
