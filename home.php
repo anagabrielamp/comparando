@@ -70,7 +70,11 @@ $precios = mysqli_query($conexion, $query);
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;" id="topnav">
-  <a class="navbar-brand" href="#">Comparando</a>
+  <a class="navbar-brand" href="home.php">Comparando</a>
+  <form action="search/search.php" method="POST" class="form-inline search-form" id="search-form">
+    <input class="form-control mr-sm-2" type="text" name="search" placeholder="Nombre de producto">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="submit-search">Buscar</button>
+  </form>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -91,12 +95,12 @@ $precios = mysqli_query($conexion, $query);
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-2">
-            <nav class="navbar navbar-expand-lg navbar-light topnav" id="topnav2">
+            <nav class="navbar navbar-expand-lg navbar-light topnav mt-5" id="topnav2">
                 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto flex-column">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="home.php">
                             <i class="fas fa-home"></i> Home 
                             <span class="sr-only">(current)
                             </span>
@@ -104,13 +108,20 @@ $precios = mysqli_query($conexion, $query);
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="crear.php">
-                        <i class="fas fa-dollar-sign"></i> Crear producto o precio
+                        <i class="fas fa-shopping-cart"></i> Crear producto
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="asignar.php">
+                        <i class="fas fa-dollar-sign"></i> Asignar precio
+                        </a>
+                    </li>
+
+                <!--    <li class="nav-item">
                         <a class="nav-link" href="#">
                         <i class="fas fa-clipboard-list"></i> Lista de mercado</a>
-                     </li>
+                    </li>
+                -->   
                 </ul>
                 </div>
             </nav>
@@ -118,9 +129,11 @@ $precios = mysqli_query($conexion, $query);
         <div class="col-sm-10">
             <div class="container">    
        
-                <div class="row mt-2">
+                <div class="row mt-3">
                         <div class="col-sm-12 lg-3" id="categorias">
-                        <a href="acciones/seleccionarcategoria.php?id=general" class="card-link">General</a><br/>
+                        <button type="button" class="btn btn-light" id="buttonCat">
+                        <a href="acciones/seleccionarcategoria.php?id=general" class="card-link">General</a>
+                        </button>
                         <?php
                             while($categoria = mysqli_fetch_array($categorias)) {
                         ?>

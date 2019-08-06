@@ -126,39 +126,44 @@ $precios = mysqli_query($conexion, $query);
                 </div>
             </nav>
         </div>
-        <div class="col-sm-10">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-5 offset-1">
-                            <h3 class="seleccionaCat"> 1. Selecciona una categoría </h3>
+        <div class="col-6 offset-2 col-md-6 offset-md-2 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <form action="acciones/crearprecio.php" method="post">
+                        <div class="form-group">
+                            <label for="precio">Precio de producto</label>
+                            <input type="text" required class="form-control" name="precio" id="precio">
+                        </div>
+                        <div class="form-group">
+                            <label for="producto">Producto</label>
+                        <?php
+                    mysqli_data_seek( $productos, 0);
+                    while($producto = mysqli_fetch_array($productos)) {
+                        ?>
+                        <input type="radio" name="productoId" value="<?php echo $producto["ProductoId"]; ?>"><?php echo $producto["Titulo"]; ?>
+                        
+                        <?php
+                        }
+                    ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="supermercado">Supermercado</label>
                             <?php
-                            while($categoria = mysqli_fetch_array($categorias)) {
-                            ?>
-                                <a href="acciones/seleccionarcategoriacrear.php?id=<?php echo $categoria["CategoriaId"]; ?>&nombre=<?php echo $categoria["Nombre"]; ?>" class="card-link"><?php echo $categoria["Nombre"]; ?></a><br/>
-                            <?php
+                    
+                    while($supermercado = mysqli_fetch_array($supermercados)) {
+                        ?>
+                        <input type="radio" name="supermercadoId" value="<?php echo $supermercado["SupermercadoId"]; ?>"><?php echo $supermercado["Nombre"]; ?>
+                        
+                        <?php
                             }
-                            ?>
+                        ?>
                         </div>
-                        <div class="col-md-6">
-                            <h3 class="creaProd"> 2. Crea un producto </h3>
-                            <?php if (isset($_SESSION["categoria-nombre"])) { ?>
-                            <div class="card p-2 mb-5">
-                            <form action="acciones/crearproducto.php" method="post">
-                                <div class="form-group">
-                                    <label for="prod-title">Nombre</label>
-                                    <input type="text" required class="form-control" name="titulo-prod" id="titulo-prod">
-                                </div>
-                                <div class="form-group">
-                                    <label for="prod-descripcion">Descripción</label>
-                                    <input type="text" required class="form-control" name="descripcion-prod" id="descripcion-prod">
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100" id="post-button">Crear producto</button>
-                            </form>
-                        </div>
-                        <?php } ?>
-                        </div>
-                    </div> 
+                        
+                        <button type="submit" class="btn btn-primary" id="button-asignar">Asignar precio</button>
+                    </form>
                 </div>
+            </div>
+            </div>
         </div>  
 
     </div>
